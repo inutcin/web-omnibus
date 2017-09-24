@@ -1,9 +1,11 @@
 <?php
     require_once("bootstrap.php");
     require_once("classes/CTemplate.php");
+    require_once("classes/CRequest.php");
    
     $arResult = array();
     $oTemplate = new CTemplate;
+    $oRequest= new CRequest;
 
     if(isset($_GET["logout"])){
         $_SERVER["USER"]->Logout();

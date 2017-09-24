@@ -4,7 +4,9 @@
         static function Error($sConst){
             $arErrorMessages = [
                 "AUTH_ERROR"    =>
-                    "Ошибка авторизации"
+                    "Ошибка авторизации",
+                "WRONG_JSON_REQUEST" => 
+                    "Некорректный JSON в запросе",
             ];
             if(isset($arErrorMessages[$sConst]))
                 return $arErrorMessages[$sConst];
@@ -30,10 +32,12 @@
                     "Список",
                 "PERMISSIONS"       =>
                     "Права доступа",
+                "REQUEST_SUBSCRIBE_ERROR"=>
+                    "Ошибка подписи запроса"
             ];
             if(isset($arMessages[$sConst]))
                 return $arMessages[$sConst];
             else
-                return 'Unknown message';
+                return $sConst;
         }
     }

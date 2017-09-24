@@ -16,4 +16,4 @@ CREATE TABLE IF NOT EXISTS `o_O_users`(
     KEY `ip` (`session_id`),
     KEY `username` (`username`),
     KEY `expires_to`(`expires_to`)
-);
+)ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT 'Пользователи';
