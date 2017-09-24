@@ -1,0 +1,55 @@
+.login-form{
+    width: 320px;
+    height: 320px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 1px #aaa solid;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: -160px;
+    margin-left: -160px;
+    z-index: 9000;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.all-fog{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 8000;
+    background-color: #888;
+    opacity: 0.4;
+}
+
+.login-submit{
+    float: right;
+}
+
+#error{
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    min-height: 50px;
+    background-color: #a00;
+    color: white;
+    text-align: center;
+    z-index: 9500;
+    position: fixed;
+}
+
+.main-menu{
+    border: 1px #DDD solid;
+    min-height: 32px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+li.logout{
+    float: right;
+}

@@ -32,11 +32,14 @@ class CDatabase
     var $show_timestamp = false;//!< Показывать timestamp в результатах
     var $query;
     
-    function __construct($dbhost='',$dbuser='',$dbpass='',$dbname='') {
-        if($dbhost)$this->dbhost = $dbhost;
-        if($dbuser)$this->dbuser = $dbuser;
-        if($dbpass)$this->dbpass = $dbpass;
-        if($dbname)$this->dbname = $dbname;
+    function __construct() {
+
+        require_once(realpath(dirname(__FILE__)."/..")."/config.php");
+
+        $this->dbhost = $arSettings["DB_HOST"];
+        $this->dbuser = $arSettings["DB_USER"];
+        $this->dbpass = $arSettings["DB_PASS"];
+        $this->dbname = $arSettings["DB_NAME"];
 
         if(!$this->link = @mysqli_connect(
             $this->dbhost, $this->dbuser, $this->dbpass, $this->dbname
@@ -45,7 +48,7 @@ class CDatabase
         }
         
         $this->log_filename = $_SERVER['DOCUMENT_ROOT'].
-            "/sql-patches/".date("Y-m-d").".sql";
+            "/sql-patches/".gmdate("Y-m-d").".sql";
         
         if(!is_object($this->link)){
             echo $_SERVER['error']->alert(mysqli_connect_error(), true);
@@ -403,7 +406,8 @@ class CDatabase
             $values_list .= ", '".mysqli_real_escape_string($this->link,$value)."' ";
         }
         
-        $query = "INSERT INTO `$table`($fields_list) VALUES(".$values_list.")";
+        $query = "INSERT INTO `$table`(`ctime`, $fields_list) 
+        VALUES('".gmdate("Y-m-d H:i:s")."', ".$values_list.")";
         
         if(!$result = $this->sql_query($query, "change")){
             $this->error = mysqli_error($this->link);
@@ -478,7 +482,7 @@ class CDatabase
             `".mysqli_real_escape_string($this->link, $field)."`='".mysqli_real_escape_string($this->link, $value)."'";
         }
 
-        $query = "UPDATE `$table` $set, `mtime`='".date("Y-m-d H:i:s")."' WHERE ".($cond?$cond:$where).($limit?" LIMIT $limit":"");
+        $query = "UPDATE `$table` $set, `mtime`='".gmdate("Y-m-d H:i:s")."' WHERE ".($cond?$cond:$where).($limit?" LIMIT $limit":"");
         //echo $query;
         if(!$result = $this->sql_query($query, "change"))return false;
         
