@@ -98,7 +98,10 @@
 
             $sAnswer = json_decode($oCurl->content); 
             $this->answer = json_decode(json_encode((array)$sAnswer),TRUE); 
+            if(!$this->answer)
             $this->answer = $oCurl->content;
+
+
 
             // Возвращаем ответ в виде массива
             return $this->answer;

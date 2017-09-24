@@ -18,7 +18,6 @@
                 return false;
             }
             $arRequest = json_decode(json_encode((array)$arRequest),TRUE);
-            print_r($arRequest);
             if(!isset($arRequest["METHOD"])){
                 $this->__setError('REQUEST_METHOD_NOT_DEFINED');
                 return false;
@@ -28,8 +27,10 @@
                 $this->__setError('REQUEST_UNDEFINED_METHOD');
                 return false;
             }
+            $this->answer["request"] = $arRequest;
             $sEcexMethod = $this->arMethods[$sMethod];
-            return $this->$sEcexMethod($arRequest);
+            $this->__setResult($this->$sEcexMethod($arRequest));
+            return true;
         }
 
         function CheckSubscribe($nAppId,$sSubscribe,$sRequest){
@@ -74,5 +75,16 @@
 
         private function __setResult($arResult){
             $this->answer["result"] = $arResult;
+        }
+        ///////////////////////////////////////////////////////
+        private function __getProjects($arRequest){
+
+            $_SERVER["DB"]->search(
+                array("a"=>"o_O_projects")
+            );
+
+            return [
+                "1"=>2
+            ];
         }
     }
