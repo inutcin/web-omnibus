@@ -19,7 +19,17 @@
                 "LOGIN_PASSWORD"    =>
                     "Пароль",
                 "LOGIN_ENTER"       =>
-                    "Войти"
+                    "Войти",
+                "PROJECT"           =>
+                    "Проект",
+                "PROJECTS"          =>
+                    "Проекты",
+                "ADD"               =>
+                    "Добавить",
+                "LIST"              =>
+                    "Список",
+                "PERMISSIONS"       =>
+                    "Права доступа",
             ];
             if(isset($arMessages[$sConst]))
                 return $arMessages[$sConst];

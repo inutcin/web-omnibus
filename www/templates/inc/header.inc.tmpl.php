@@ -38,9 +38,20 @@
                 </a>
             </li>
             <li class="dropdown">
-                <a data-toggle="dropdown" href="#">Dropdown trigger</a>
+                <a data-toggle="dropdown" href="/projects.php"><?=
+                    CMessage::Message('PROJECT')
+                ?></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                .....
+                    <li>
+                        <a href="/projects.php?act=list"><?=
+                            CMessage::Message('LIST')
+                        ?></a>
+                    </li>
+                    <li>
+                        <a href="/projects.php?act=add"><?=
+                            CMessage::Message('ADD')
+                        ?></a>
+                    </li>
                 </ul>
             </li>
             <li class="logout">
