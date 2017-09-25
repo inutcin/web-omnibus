@@ -136,14 +136,10 @@
             ];
         }
 
-        private function __methodGetProjects($arRequest){
-
-            $_SERVER["DB"]->search(
-                array("a"=>"o_O_projects")
-            );
-
-            return [
-                "1"=>2
-            ];
+        private function __methodGetProjects($arRequest, $arUser){
+            require_once("CProjects.php");
+            $oProject = new CProject;
+            $arParams = [];
+            return $oProject->GetList($arParams);
         }
     }
