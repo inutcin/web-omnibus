@@ -7,6 +7,14 @@
                     "Ошибка авторизации",
                 "WRONG_JSON_REQUEST" => 
                     "Некорректный JSON в запросе",
+                "LOGIN_INCORRECT"=>
+                    "Ошибка авторизации",
+                "SESSION_NOT_FOUND"=>
+                    "Сессия пользователя истекла или не существует",
+                "REQUEST_SUBSCRIBE_ERROR"=>
+                    "Ошибка подписи запроса",
+                "REQUEST_UNDEFINED_METHOD"=>
+                    "Неизвестный метод запроса"
             ];
             if(isset($arErrorMessages[$sConst]))
                 return $arErrorMessages[$sConst];
@@ -32,8 +40,6 @@
                     "Список",
                 "PERMISSIONS"       =>
                     "Права доступа",
-                "REQUEST_SUBSCRIBE_ERROR"=>
-                    "Ошибка подписи запроса"
             ];
             if(isset($arMessages[$sConst]))
                 return $arMessages[$sConst];

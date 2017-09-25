@@ -2,11 +2,10 @@
     
 class CUser{
 
-    private $sessionExpire = 600; // ExpireTime in seconds
+    private $sessionExpire = 3600; // ExpireTime in seconds
     private $arUserInfo = [];
 
     function __construct(){
-        session_start();
         if($_SERVER["DB"]->search_one("o_O_users", [],
             "
                 `session_id`='".session_id()."'
@@ -59,7 +58,7 @@ class CUser{
         $_SERVER["DB"]->Update(
             "o_O_users",
             [
-                "session_id"=>session_id(),
+                "session_id"=>sha1(time().rand().$_SERVER["REMOTE_ADDR"]),
                 "last_login"=>gmdate("Y-m-d H:i:s"),
                 "expires_to"=>gmdate(
                     "Y-m-d H:i:s",
@@ -98,6 +97,14 @@ class CUser{
             [
                 "id"=>$nUserId
             ]
+        ))return $_SERVER["DB"]->record;
+    }
+
+    function getSessionIfNotExpire($sSessionId){
+        if($_SERVER["DB"]->search_one(
+            "o_O_users",[],
+            "session_id='".$sSessionId."' AND `expires_to`>'"
+            .gmdate("Y-m-d H:i:s")."'"
         ))return $_SERVER["DB"]->record;
     }
 

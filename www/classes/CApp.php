@@ -1,15 +1,25 @@
 <?php
     require_once("CMessage.php");
+    require_once("CUser.php");
 
     class CApp
     {
+
+        private $oUser = [];
         private $answer = [
             "errors"=>[]
         ];
 
         private $arMethods = [
-            "getProjects"=>"__getProjects"
+            "getProjects"   =>  "__methodGetProjects",
+            "login"         =>  "__methodLogin",
+            "getProfile"    =>  "__methodGetProfile"
         ];
+
+        function __construct(){
+            $this->oUser = new CUser;
+        }
+
 
         function exec($sRequest){
             $arRequest = json_decode($sRequest);
@@ -19,17 +29,35 @@
             }
             $arRequest = json_decode(json_encode((array)$arRequest),TRUE);
             if(!isset($arRequest["METHOD"])){
-                $this->__setError('REQUEST_METHOD_NOT_DEFINED');
+                $this->__setError(CMessages::Error(
+                    'REQUEST_METHOD_NOT_DEFINED'
+                ));
                 return false;
             }
             $sMethod = $arRequest["METHOD"];
             if(!isset($this->arMethods[$sMethod])){
-                $this->__setError('REQUEST_UNDEFINED_METHOD');
+                $this->__setError(CMessage::Error(
+                    'REQUEST_UNDEFINED_METHOD'
+                )." &laquo;".$sMethod."&raquo;");
                 return false;
             }
-            $this->answer["request"] = $arRequest;
+            $arUser = [];
+            if(
+                $sMethod!='login'
+                &&
+                !$arUser = $this->oUser->getSessionIfNotExpire(
+                    $arRequest["SESSION_ID"]
+                )
+            ){
+                $this->__setError(CMessage::Error('SESSION_NOT_FOUND'));
+                return false;
+            }
+            
+            if(isset($_GET["debug"]))
+                $this->answer["request"] = $arRequest;
             $sEcexMethod = $this->arMethods[$sMethod];
-            $this->__setResult($this->$sEcexMethod($arRequest));
+
+            $this->__setResult($this->$sEcexMethod($arRequest, $arUser));
             return true;
         }
 
@@ -43,7 +71,9 @@
             );
 
             if($sNeedSubscribe!=$sSubscribe){
-                $this->__setError(CMessage::Message('REQUEST_SUBSCRIBE_ERROR'));
+                $this->__setError(CMessage::Error(
+                    'REQUEST_SUBSCRIBE_ERROR'
+                ));
                 return false; 
             }
             return true;
@@ -77,7 +107,36 @@
             $this->answer["result"] = $arResult;
         }
         ///////////////////////////////////////////////////////
-        private function __getProjects($arRequest){
+
+        private function __methodGetProfile($arRequest, $arUser){
+            return [
+                "id"        =>  $arUser["id"],
+                "username"  =>  $arUser["username"],
+                "expires_to"=>  $arUser["expires_to"]
+            ];
+        }
+
+
+        private function __methodLogin($arRequest){
+            if(!$arUser = $this->oUser->CheckAuth(
+                $arRequest["USERNAME"],
+                $arRequest["PASSWORD"]
+            )){
+                $this->__setError(CMessage::Error(
+                    "LOGIN_INCORRECT"
+                ));
+                return [];
+            }
+            $this->oUser->Auth($arUser["id"]);
+
+            $arUser = $this->oUser->getById($arUser["id"]);
+
+            return [
+                "session_id"=>$arUser["session_id"]
+            ];
+        }
+
+        private function __methodGetProjects($arRequest){
 
             $_SERVER["DB"]->search(
                 array("a"=>"o_O_projects")

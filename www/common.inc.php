@@ -8,37 +8,54 @@
     $oRequest= new CRequest;
 
     if(isset($_GET["logout"])){
-        $_SERVER["USER"]->Logout();
+        setCookie(CRequest::cookie_session,"none");
         header("Location: /");
         die;
     }
-
 
     if(
         isset($_POST["username"])
         &&
         isset($_POST["password"])
-        &&
-        $arUserInfo = $_SERVER["USER"]->CheckAuth(
-            $_POST["username"],
-            $_POST["password"]
-        )
     ){
-        $_SERVER["USER"]->Auth($arUserInfo["id"]);
-		header("Location: ".$_SERVER["REQUEST_URI"]);
-		die;
+        $oRequest->clearParams(); 
+        $oRequest->setMethod("login");
+        $oRequest->addParam('USERNAME',$_POST['username']);
+        $oRequest->addParam('PASSWORD',$_POST['password']);
+        $arAnswer = $oRequest->request();
+        if(
+            isset($arAnswer["errors"])
+            &&
+            is_array($arAnswer["errors"])
+            &&
+            $arAnswer["errors"]
+        ){
+            $arResult["ERROR"] = implode("<br>",$arAnswer["errors"]);
+        }
+        else{
+            setCookie(
+                CRequest::cookie_session,
+                $arAnswer["result"]["session_id"]
+            );
+            header("Location: ".$_SERVER["REQUEST_URI"]);
+        }
+        
     }
-    elseif(
-        isset($_POST["username"])
-        &&
-        isset($_POST["password"])
-    ){
-        $arResult["ERROR"] = CMessage::Error('AUTH_ERROR');
-    }
-
-    if(!$_SERVER["USER"]->getUserInfo()){
-        $oTemplate->display("login_form", $arResult);
-        die;
+    else{
+        $oRequest->clearParams(); 
+        $oRequest->setMethod("getProfile");
+        $arAnswer = $oRequest->request();
+        if(
+            isset($arAnswer["errors"])
+            &&
+            is_array($arAnswer["errors"])
+            &&
+            $arAnswer["errors"]
+        ){
+            $arResult["ERROR"] = implode("<br>",$arAnswer["errors"]);
+            $oTemplate->display("login_form", $arResult);
+            die;
+        }
     }
     
 

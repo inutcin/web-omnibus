@@ -6,7 +6,6 @@
     */
     class CRequest{
         var $params  = array();     //!< Параметры запроса 
-        var $curlMethod = 'GET';    //!< Метод http-запроса
         var $curlStatus = array();  //!< Состояние curl-запроса
         private $secret = '';            //!< Ключ для подписи запросов
         private $appId = '';
@@ -14,6 +13,7 @@
         private $errors = array();  
         private $method = "login";
         private $answer = array();
+        const cookie_session = 'OMNIBUS_SESSION';
 
         function __construct(){
             // Получаем из настроек ID приложения и ключ для подписи
@@ -67,6 +67,13 @@
         */
         function request(){
             $this->params["METHOD"] = $this->method;
+            $sSessionId = 
+                isset($_COOKIE[self::cookie_session])
+                ?
+                $_COOKIE[self::cookie_session]
+                :
+                '';
+            $this->params["SESSION_ID"] = $sSessionId;
             ksort($this->params);
             // Формируем строку подписи
             $sSubscribeString   = json_encode( $this->params);
