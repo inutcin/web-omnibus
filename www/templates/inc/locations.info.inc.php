@@ -80,3 +80,11 @@
     </tr>
     <? endforeach ?>
 </table>
+
+<h3 class="glyphicon glyphicon-calendar"> <?= 
+    CMessage::UI('Tasks');
+?></h3>
+<br/>
+<h3 class="glyphicon glyphicon-tasks"> <?= 
+    CMessage::UI('Task logs');
+?> </h3>
