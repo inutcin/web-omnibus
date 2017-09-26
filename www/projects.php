@@ -106,6 +106,55 @@
                 header("Location: /projects.php?act=list");
             }
         break;
+        case 'info':
+
+            if(
+                isset($_POST["add_location_name"])
+                &&
+                isset($_POST["add_location_type"])
+                &&
+                isset($_GET["id"])
+            ){
+                $oRequest->clearParams();
+                $oRequest->setMethod("addLocation");
+                $oRequest->addParam("PROJECT_ID", intval($_GET["id"]));
+                $oRequest->addParam("LOCATION_NAME", 
+                    $_POST["add_location_name"]);
+                $oRequest->addParam("LOCATION_TYPE", 
+                    $_POST["add_location_type"]);
+                $arAnswer = $oRequest->request();
+                if(
+                    isset($arAnswer["errors"]) 
+                    && is_array($arAnswer["errors"])
+                    && $arAnswer["errors"]
+                    
+                ){
+                    $arResult["ERROR"] = implode("<br/>",$arAnswer["errors"]);
+                }
+                else{
+                    header("Location: /locations.php?act=edit&id="
+                        .$arAnswer["result"]["id"]
+                    );
+                    die;
+                }
+            }
+
+            $oRequest->clearParams();
+            $oRequest->setMethod("infoProject");
+            $oRequest->addParam("ID", intval($_GET["id"]));
+            $arAnswer = $oRequest->request();
+            if(
+                isset($arAnswer["errors"]) 
+                && is_array($arAnswer["errors"])
+                && $arAnswer["errors"]
+                
+            ){
+                $arResult["ERROR"] = implode("<br/>",$arAnswer["errors"]);
+            }
+            else{
+                $arResult["INFO"] = $arAnswer['result'];
+            }
+        break;
         default:
         break;
     }

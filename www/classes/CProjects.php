@@ -28,6 +28,19 @@
             ];
         }
 
+
+        function Info($nId){
+            require_once("CLocation.php");
+            require_once("CLocationType.php");
+            $oLocation = new CLocation;
+            $oLocationType = new CLocationType;
+            return [
+                "project"  =>   $this->GetById($nId),
+                "locations"=>   $oLocation->GetList($nId),
+                "location_types"=>$oLocationType->GetList()
+            ];
+        }
+
         function Delete($nId){
             $_SERVER["DB"]->delete("o_O_projects",["id"=>$nId]);
             return true;

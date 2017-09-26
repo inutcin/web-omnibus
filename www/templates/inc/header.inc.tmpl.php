@@ -33,26 +33,14 @@
 	<div class="main-menu">
         <ul class="nav nav-pills">
             <li class="active">
-                <a href=".">
-                    Главная
+                <a href="/">
+                    <?= CMEssage::UI('Main')?>
                 </a>
             </li>
             <li class="dropdown">
-                <a data-toggle="dropdown" href="/projects.php"><?=
-                    CMessage::Message('PROJECT')
+                <a href="/projects.php"><?=
+                    CMessage::UI('Projects')
                 ?></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li>
-                        <a href="/projects.php?act=list"><?=
-                            CMessage::Message('LIST')
-                        ?></a>
-                    </li>
-                    <li>
-                        <a href="/projects.php?act=add"><?=
-                            CMessage::Message('ADD')
-                        ?></a>
-                    </li>
-                </ul>
             </li>
             <li class="logout">
                 <a href="?logout">

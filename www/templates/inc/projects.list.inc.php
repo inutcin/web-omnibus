@@ -1,12 +1,11 @@
 <h1><?= CMEssage::UI('Projects')?></h1>
 
 <form class="form-inline" method="POST" action="/projects.php?act=list">
-    <input type="text" class="input-small" placeholder="<?=
+    <input type="text" class="input-small form-control" placeholder="<?=
     CMessage::UI('Project name')
     ?>" name="name" value="<?= htmlspecialchars(
         isset($_POST["name"])?$_POST["name"]:""
     )?>">
-    <input type="hidden" class="input-small" placeholder="Пароль">
     <button type="submit" class="btn btn-primary"><?= 
         CMessage::UI('Add project') 
     ?></button>
@@ -14,9 +13,6 @@
 <br>
 <table class="table table-striped table-hover">
     <tr>
-        <th style="width: 100px;">
-            Id
-        </th>
         <th>
             <?= CMessage::UI('Project name')?>
         </th>
@@ -28,10 +24,10 @@
     foreach($arResult["PROJECTS"] as $arProject):?>
     <tr>
         <td>
-            <?= $arProject['id']?>
-        </td>
-        <td>
+            <a class="glyphicon glyphicon-book" 
+            href="/projects.php?act=info&id=<?= $arProject["id"]?>">
             <?= $arProject['name']?>
+            </a>
         </td>
         <td>
             <a href="/projects.php?act=edit&id=<?= 
