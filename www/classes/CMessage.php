@@ -19,7 +19,7 @@
             if(isset($arErrorMessages[$sConst]))
                 return $arErrorMessages[$sConst];
             else
-                return 'Unknown error';
+                return $sConst;
         }
 
         static function Message($sConst){
@@ -43,6 +43,17 @@
             ];
             if(isset($arMessages[$sConst]))
                 return $arMessages[$sConst];
+            else
+                return $sConst;
+        }
+
+        static function UI($sConst){
+            $arUI = [
+                "blabla"    =>
+                    "Блабла",
+            ];
+            if(isset($arUI[$sConst]))
+                return $arUI[$sConst];
             else
                 return $sConst;
         }

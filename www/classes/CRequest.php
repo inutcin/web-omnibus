@@ -89,6 +89,7 @@
             $oCurl->url = $this->baseUrl
                 ."?appid=" .$this->appId
                 ."&subscribe=".$sSubscribe
+                ."&debug=1"
             ;
             $oCurl->post_params = [
                 "request"=>$sSubscribeString

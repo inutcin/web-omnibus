@@ -34,7 +34,4 @@
         ?>"/> 
     </form>
 </div>
-<? if(isset($arResult["ERROR"]) && $arResult["ERROR"]):?>
-<script>riseError('<?= $arResult["ERROR"]?>')</script>
-<? endif ?>
 <?php include("inc/footer.inc.tmpl.php");?>
