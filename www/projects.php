@@ -89,6 +89,23 @@
 
             }
         break;
+        case 'delete':
+            $oRequest->clearParams();
+            $oRequest->setMethod("deleteProject");
+            $oRequest->addParam("ID", intval($_GET["id"]));
+            $arAnswer = $oRequest->request();
+            if(
+                isset($arAnswer["errors"]) 
+                && is_array($arAnswer["errors"])
+                && $arAnswer["errors"]
+                
+            ){
+                $arResult["ERROR"] = implode("<br/>",$arAnswer["errors"]);
+            }
+            else{
+                header("Location: /projects.php?act=list");
+            }
+        break;
         default:
         break;
     }

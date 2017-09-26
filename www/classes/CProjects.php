@@ -28,6 +28,11 @@
             ];
         }
 
+        function Delete($nId){
+            $_SERVER["DB"]->delete("o_O_projects",["id"=>$nId]);
+            return true;
+        }
+
         function GetById($nId){
             if(!$_SERVER["DB"]->search_one("o_O_projects",[
                 "id"=>$nId

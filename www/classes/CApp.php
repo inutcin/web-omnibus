@@ -17,7 +17,8 @@
             "getProfile"    =>  "__methodGetProfile",
             "addProject"    =>  "__methodAddProject",
             "getProject"    =>  "__methodGetProject",
-            "saveProject"   =>  "__methodSaveProject"
+            "saveProject"   =>  "__methodSaveProject",
+            "deleteProject"   =>  "__methodDeleteProject",
         ];
 
         function __construct(){
@@ -151,6 +152,28 @@
             }
  
             return 'success';
+        }
+
+        private function __methodDeleteProject($arRequest, $arUser){
+            
+            if(
+                !isset($arRequest["ID"])
+                ||
+                !$arRequest["ID"]
+            ){
+                $this->__setError(CMessage::Error('Project ID not defined'));
+                return false;
+            }
+
+            require_once("CProjects.php");
+            $oProject = new CProject;
+
+            if(!$arProject=$oProject->Delete($arRequest["ID"])){
+                $this->__setError($oProject->getErrors());
+                return false;
+            }
+
+            return "success";
         }
 
         private function __methodGetProject($arRequest, $arUser){

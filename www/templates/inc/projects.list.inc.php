@@ -20,7 +20,7 @@
         <th>
             <?= CMessage::UI('Project name')?>
         </th>
-        <th style="width: 100px;">
+        <th style="width: 200px;">
             <?= CMEssage::UI('Actions')?>
         </th>
     </tr>
@@ -37,6 +37,11 @@
             <a href="/projects.php?act=edit&id=<?= 
             $arProject["id"]?>"><i class="glyphicon glyphicon-pencil"><?= 
                 CMessage::UI('Edit')
+            ?></i></a>
+            <a onclick="return confirm('<?= CMessage::UI('Are you sure?')?>');" 
+            href="/projects.php?act=delete&id=<?= 
+            $arProject["id"]?>"><i class="glyphicon glyphicon-remove"><?= 
+                CMessage::UI('Delete')
             ?></i></a>
         </td>
     </tr>
