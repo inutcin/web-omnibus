@@ -34,7 +34,14 @@ class CUser{
                 "username"=>$sUsername,
                 "password"=>$this->__getPasswordHash($sUsername, $sPassword)
             ]
-        ))return $_SERVER["DB"]->record;
+        )){
+            $_SERVER["DB"]->Update("o_O_Users",[
+                "expires_to"=>gmdate("Y-m-d H:i:s",time()+$this->sessionExpire)
+            ],[
+                "id"=>$_SERVER["DB"]->record["id"]
+            ]);
+            return $_SERVER["DB"]->record;
+        }
         return false;
     }
 

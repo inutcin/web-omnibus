@@ -29,11 +29,23 @@
             return $_SERVER["DB"]->insert("o_O_locations", $arFields);
         }
 
+        function Update($nId, $arFields){
+            return $_SERVER["DB"]->update(
+                "o_O_locations", $arFields, ["id"=>$nId]
+            );
+        }
+
+        function Delete($nId){
+            return $_SERVER["DB"]->delete(
+                "o_O_locations", ["id"=>$nId]
+            );
+        }
+
         function Info($nId){
             $arLocation = $this->GetById($nId);
             require_once("CProjects.php");
             $oProject = new CProject;
-            $arProject = $oProject->GetById($arLocation["id"]);
+            $arProject = $oProject->GetById($arLocation["project_id"]);
             return [
                 "project"   =>  $arProject,
                 "location"  =>  $arLocation,

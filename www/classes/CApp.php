@@ -22,6 +22,9 @@
             "infoProject"   =>  "__methodInfoProject",
             "addLocation"   =>  "__methodAddLocation",
             "infoLocation"   =>  "__methodInfoLocation",
+            "getLocationTypes"   =>  "__methodGetLocationTypes",
+            "saveLocation"   =>  "__methodSaveLocation",
+            "deleteLocation"   =>  "__methodDeleteLocation",
         ];
 
         function __construct(){
@@ -127,8 +130,63 @@
         }
         ///////////////////////////////////////////////////////
 
+        private function __methodDeleteLocation($arRequest, $arUser){
+            if( !isset($arRequest["ID"]) || !intval($arRequest["ID"]) ){
+                $this->__setError(CMessage::Error('Location id not exists'));
+                return false;
+            }
+            require_once("CLocation.php");
+            $oLocation = new CLocation;
+            $arInfo = [];
+            if(!$arInfo = $oLocation->GetById($arRequest["ID"])){
+                $this->__setError(CMessage::Error('Location not exists'));
+                return false;
+            }
+            $oLocation->Delete($arRequest["ID"]);
+            return [
+                "project_id"=>$arInfo["project_id"]
+            ]; 
+        }
+
+
+        private function __methodSaveLocation($arRequest, $arUser){
+            if( !isset($arRequest["ID"]) || !intval($arRequest["ID"]) ){
+                $this->__setError(CMessage::Error('Location id not exists'));
+                return false;
+            }
+            if( !isset($arRequest["NAME"]) || !$arRequest["NAME"] ){
+                $this->__setError(CMessage::Error('Location name not exists'));
+                return false;
+            }
+            require_once("CLocation.php");
+            $oLocation = new CLocation;
+            $arInfo = [];
+            if(!$arInfo = $oLocation->GetById($arRequest["ID"])){
+                $this->__setError(CMessage::Error('Location not exists'));
+                return false;
+            }
+
+            $oLocation->Update(
+                $arRequest["ID"],
+                [
+                    "name"      =>  $arRequest["NAME"],
+                    "type_id"   =>  $arRequest["TYPE_ID"]
+                ]
+            );        
+            return 'success';
+        }
+
+
+        private function __methodGetLocationTypes($arRequest, $arUser){
+            require_once("CLocationType.php");
+            $oLocationType = new CLocationType;
+            return $oLocationType->GetList();
+        }
+
         private function __methodInfoLocation($arRequest, $arUser){
-            if(!$arRequest["ID"]){
+            if(
+                !isset($arRequest["ID"]) || !intval($arRequest["ID"])
+            ){
                 $this->__setError(CMessage::Error('Location ID not defined'));
                 return false;
             }
