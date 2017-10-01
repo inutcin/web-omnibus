@@ -23,6 +23,9 @@
         isset($_POST["add_access_name"])?$_POST["add_access_name"]:""
     )?>">
     <select class="form-control" name="add_access_type">
+        <option value="0">-<?= 
+            CMEssage::UI('Select access type');
+        ?>-</option>
     <? foreach($arResult["INFO"]["access_types"] as $arAccessType):?>
         <option value="<?= $arAccessType["id"]?>" <? 
             if(
@@ -30,12 +33,15 @@
                 &&
                 $arAccessType["id"]==$_POST["add_access_type"]
             )echo " selected";
-        ?>>
+        ?> default-name="<?=
+            CMessage::UI($arAccessType['default_access_name'])
+        ?>">
             <?= CMessage::UI($arAccessType["name"])?>
         </option>
     <? endforeach ?>
     </select>
-    <button type="submit" class="btn btn-primary"><?= 
+    <button type="submit" class="btn btn-primary" 
+    name="addAccessSubmit"><?= 
         CMessage::UI('Add access') 
     ?></button>
 </form>
@@ -81,10 +87,4 @@
     <? endforeach ?>
 </table>
 
-<h3 class="glyphicon glyphicon-calendar"> <?= 
-    CMessage::UI('Tasks');
-?></h3>
-<br/>
-<h3 class="glyphicon glyphicon-tasks"> <?= 
-    CMessage::UI('Task logs');
-?> </h3>
+

@@ -46,10 +46,14 @@
             require_once("CProjects.php");
             $oProject = new CProject;
             $arProject = $oProject->GetById($arLocation["project_id"]);
+            require_once("CAccessType.php");
+            $oAccessType = new CAccessType;
+            $arAccessTypes = $oAccessType->GetList();
             return [
-                "project"   =>  $arProject,
-                "location"  =>  $arLocation,
-                "accesses"  =>  []
+                "project"       =>  $arProject,
+                "location"      =>  $arLocation,
+                "access_types" =>  $arAccessTypes,
+                "accesses"      => []
             ];
         }
 

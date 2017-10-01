@@ -2,6 +2,7 @@
     require_once("bootstrap.php");
     require_once("classes/CTemplate.php");
     require_once("classes/CRequest.php");
+    require_once("classes/xprint.class.php");
    
     $arResult = array();
     $oTemplate = new CTemplate;

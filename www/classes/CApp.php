@@ -12,19 +12,20 @@
         ];
 
         private $arMethods = [
-            "getProjects"   =>  "__methodGetProjects",
-            "login"         =>  "__methodLogin",
-            "getProfile"    =>  "__methodGetProfile",
-            "addProject"    =>  "__methodAddProject",
-            "getProject"    =>  "__methodGetProject",
-            "saveProject"   =>  "__methodSaveProject",
-            "deleteProject" =>  "__methodDeleteProject",
-            "infoProject"   =>  "__methodInfoProject",
-            "addLocation"   =>  "__methodAddLocation",
-            "infoLocation"   =>  "__methodInfoLocation",
-            "getLocationTypes"   =>  "__methodGetLocationTypes",
-            "saveLocation"   =>  "__methodSaveLocation",
-            "deleteLocation"   =>  "__methodDeleteLocation",
+            "getProjects"       =>  "__methodGetProjects",
+            "login"             =>  "__methodLogin",
+            "getProfile"        =>  "__methodGetProfile",
+            "addProject"        =>  "__methodAddProject",
+            "getProject"        =>  "__methodGetProject",
+            "saveProject"       =>  "__methodSaveProject",
+            "deleteProject"     =>  "__methodDeleteProject",
+            "infoProject"       =>  "__methodInfoProject",
+            "addLocation"       =>  "__methodAddLocation",
+            "infoLocation"      =>  "__methodInfoLocation",
+            "getLocationTypes"  =>  "__methodGetLocationTypes",
+            "saveLocation"      =>  "__methodSaveLocation",
+            "deleteLocation"    =>  "__methodDeleteLocation",
+            "addAccess"         =>  "__methodAddAccess",
         ];
 
         function __construct(){

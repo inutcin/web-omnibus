@@ -109,8 +109,6 @@
             if(!$this->answer)
             $this->answer = $oCurl->content;
 
-
-
             // Возвращаем ответ в виде массива
             return $this->answer;
         }
